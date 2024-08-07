@@ -22,6 +22,7 @@ function Game({ wordLength, numTries }: GameProps) {
   const [entries, setEntries] = useState(initialTryArray);
   const [triesDone, setTriesDone] = useState(0);
   const [showCorrectWord, setShowCorrectWord] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
   useEffect(() => {
     axios
       .get(
@@ -37,10 +38,15 @@ function Game({ wordLength, numTries }: GameProps) {
   }, []);
 
   useEffect(() => {
-    if (triesDone === numTries || enteredWord === word) {
-      setShowCorrectWord(true);
+    if (gameEnded) {
+      for (let i = 0; i < wordLength; i++) {
+        let currentInput = document.getElementById(
+          `input_${i}`
+        ) as HTMLInputElement;
+        currentInput.disabled = true;
+      }
     }
-  }, [triesDone]);
+  }, [gameEnded]);
 
   const isAlphabet = (key: string): boolean => {
     return /^[a-zA-Z]$/.test(key);
@@ -73,7 +79,12 @@ function Game({ wordLength, numTries }: GameProps) {
         entryArray[firstEmptyIndex] = currentEntry;
         setEntries(entryArray);
 
-        setTriesDone(triesDone + 1);
+        let tries = triesDone + 1;
+        setTriesDone(tries);
+
+        if (tries === numTries || entries.includes(word)) {
+          setGameEnded(true);
+        }
 
         setEnteredWord("");
 
@@ -129,7 +140,7 @@ function Game({ wordLength, numTries }: GameProps) {
             </div>
           ))}
         </p>
-        {showCorrectWord && <p>Correct word is: {word}</p>}
+        {gameEnded && <p>Correct word is: {word}</p>}
       </div>
     </>
   );
