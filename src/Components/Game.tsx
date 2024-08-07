@@ -22,7 +22,6 @@ function Game({ wordLength, numTries }: GameProps) {
   const [entries, setEntries] = useState(initialTryArray);
   const [triesDone, setTriesDone] = useState(0);
   const [showCorrectWord, setShowCorrectWord] = useState(false);
-
   useEffect(() => {
     axios
       .get(
@@ -43,22 +42,52 @@ function Game({ wordLength, numTries }: GameProps) {
     }
   }, [triesDone]);
 
-  const isAlphaNumeric = (str: string) => {
-    return /^[a-zA-Z0-9]+$/.test(str);
+  const isAlphabet = (key: string): boolean => {
+    return /^[a-zA-Z]$/.test(key);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, id: string) => {
-    setTimeout(() => {}, 1000);
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>, id: string) => {
+    const inputElement = document.getElementById(id) as HTMLInputElement;
+    let currentEntry = enteredWord;
 
-    if (isAlphaNumeric(e.key)) {
+    if (isAlphabet(e.key) && currentEntry.length < wordLength) {
+      inputElement.value = e.key.toUpperCase();
+      currentEntry += e.key.toUpperCase();
+      setEnteredWord(currentEntry);
       document.getElementById(`input_${Number(id.split("_")[1]) + 1}`)?.focus();
-    } else if (e.key.toLowerCase() === "backspace") {
+    } else if (e.key.toLowerCase() === "backspace" && currentEntry.length > 0) {
+      inputElement.value = "";
+      currentEntry = currentEntry.slice(0, -1);
+      setEnteredWord(currentEntry);
       document.getElementById(`input_${Number(id.split("_")[1]) - 1}`)?.focus();
-    }
-  };
+    } else if (e.key.toLocaleLowerCase() === "enter") {
+      if (currentEntry.length === wordLength) {
+        let entryArray = entries;
+        let firstEmptyIndex = 0;
+        for (let i = 0; i < entryArray.length; i++) {
+          if (entryArray[i] === "") {
+            firstEmptyIndex = i;
+            break;
+          }
+        }
+        entryArray[firstEmptyIndex] = currentEntry;
+        setEntries(entryArray);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.toUpperCase();
+        setTriesDone(triesDone + 1);
+
+        setEnteredWord("");
+
+        for (let i = wordLength - 1; i >= 0; --i) {
+          let currentElement = document.getElementById(
+            `input_${i}`
+          ) as HTMLInputElement;
+          currentElement.value = "";
+        }
+        document.getElementById(`input_0`)?.focus();
+
+        return;
+      }
+    }
   };
 
   return (
@@ -71,8 +100,7 @@ function Game({ wordLength, numTries }: GameProps) {
                 id={`input_${i}`}
                 type="text"
                 maxLength={1}
-                onChange={handleChange}
-                onKeyDown={(e) => handleKeyDown(e, `input_${i}`)}
+                onKeyUp={(e) => handleKeyUp(e, `input_${i}`)}
                 className={`border-2 w-14`}
               />
             </span>
