@@ -4,4 +4,14 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  font-size: 36px;
+}
+
+body input {
+  text-indent: 0.4em;
+}
+
+body #brand {
+  font-family: "Montserrat", sans-serif;
+  font-size: 48px;
 }

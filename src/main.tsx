@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
+import Game from "./Components/Game.tsx";
+import Brand from "./Components/Brand.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App wordLength={9} numTries={6} />
+    <Brand />
+    <Game wordLength={9} numTries={6} />
   </React.StrictMode>
 );
