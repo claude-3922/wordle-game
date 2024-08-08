@@ -7,6 +7,6 @@ import Brand from "./Components/Brand.tsx";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Brand />
-    <Game wordLength={9} numTries={6} />
+    <Game wordLength={9} numTries={5} />
   </React.StrictMode>
 );
