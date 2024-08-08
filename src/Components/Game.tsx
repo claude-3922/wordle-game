@@ -5,6 +5,7 @@ import {
   useState,
   KeyboardEvent,
   ChangeEvent,
+  MouseEvent,
 } from "react";
 
 interface GameProps {
@@ -104,6 +105,10 @@ function Game({ wordLength, numTries }: GameProps) {
     e.target.value = e.target.value.toUpperCase();
   };
 
+  const handleClick = (e: MouseEvent<HTMLImageElement>) => {
+    window.location.reload();
+  };
+
   return (
     <>
       <div className="flex flex-col justify-start items-center" id="game">
@@ -116,7 +121,7 @@ function Game({ wordLength, numTries }: GameProps) {
                 maxLength={1}
                 onKeyUp={(e) => handleKeyUp(e, `input_${i}`)}
                 onChange={handleChange}
-                className={`min-w-[1.75ch] max-w-[2ch] min-h-[1.75ch] max-h-[2ch] text-white text-[30px] p-[4px] m-[4px] sm:font-semibold sm:indent-2.5 sm:min-w-[2.5ch] sm:max-w-[3ch] sm:min-h-[2.5ch] sm:max-h-[3ch] sm:text-[32px] sm:p-[6px] sm:m-[6px] md:font-semibold md:indent-3 md:min-w-[3ch] md:max-w-[3.5ch] md:min-h-[3ch] md:max-h-[3.5ch] md:text-[34px] md:p-[8px] md:m-[8px] lg:font-black lg:indent-7 lg:min-w-[4ch] lg:max-w-[5ch] lg:min-h-[4ch] lg:max-h-[5ch] lg:text-[36px] lg:p-[10px] lg:m-[10px] bg-gray-900 text-white`}
+                className={`max-w-[2.5ch] max-h-[2.5ch] indent-3 text-white text-[30px] m-[2px] lg:font-black lg:indent-4 lg:max-w-[3.75ch] lg:max-h-[3.75ch] lg:p-[12px] lg:text-[36px] lg:m-[4px] bg-gray-900 text-white`}
               />
             </span>
           ))}
@@ -136,9 +141,9 @@ function Game({ wordLength, numTries }: GameProps) {
                       className={
                         word.includes(c)
                           ? word.charAt(charIndex) === c
-                            ? "min-w-[1.75ch] max-w-[2ch] min-h-[1.75ch] max-h-[2ch] text-white text-[30px] p-[4px] m-[4px] sm:font-semibold sm:indent-2.5 sm:min-w-[2.5ch] sm:max-w-[3ch] sm:min-h-[2.5ch] sm:max-h-[3ch] sm:text-[32px] sm:p-[6px] sm:m-[6px] md:font-semibold md:indent-3 md:min-w-[3ch] md:max-w-[3.5ch] md:min-h-[3ch] md:max-h-[3.5ch] md:text-[34px] md:p-[8px] md:m-[8px] lg:font-black lg:indent-7 lg:min-w-[4ch] lg:max-w-[5ch] lg:min-h-[4ch] lg:max-h-[5ch] lg:text-[36px] lg:p-[10px] lg:m-[10px] bg-green-600 placeholder:text-white"
-                            : "min-w-[1.75ch] max-w-[2ch] min-h-[1.75ch] max-h-[2ch] text-white text-[30px] p-[4px] m-[4px] sm:font-semibold sm:indent-2.5 sm:min-w-[2.5ch] sm:max-w-[3ch] sm:min-h-[2.5ch] sm:max-h-[3ch] sm:text-[32px] sm:p-[6px] sm:m-[6px] md:font-semibold md:indent-3 md:min-w-[3ch] md:max-w-[3.5ch] md:min-h-[3ch] md:max-h-[3.5ch] md:text-[34px] md:p-[8px] md:m-[8px] lg:font-black lg:indent-7 lg:min-w-[4ch] lg:max-w-[5ch] lg:min-h-[4ch] lg:max-h-[5ch] lg:text-[36px] lg:p-[10px] lg:m-[10px] bg-yellow-600 placeholder:text-white"
-                          : "min-w-[1.75ch] max-w-[2ch] min-h-[1.75ch] max-h-[2ch] text-white text-[30px] p-[4px] m-[4px] sm:font-semibold sm:indent-2.5 sm:min-w-[2.5ch] sm:max-w-[3ch] sm:min-h-[2.5ch] sm:max-h-[3ch] sm:text-[32px] sm:p-[6px] sm:m-[6px] md:font-semibold md:indent-3 md:min-w-[3ch] md:max-w-[3.5ch] md:min-h-[3ch] md:max-h-[3.5ch] md:text-[34px] md:p-[8px] md:m-[8px] lg:font-black lg:indent-7 lg:min-w-[4ch] lg:max-w-[5ch] lg:min-h-[4ch] lg:max-h-[5ch] lg:text-[36px] lg:p-[10px] lg:m-[10px] bg-gray-600 placeholder:text-white"
+                            ? "max-w-[2.5ch] max-h-[2.5ch] indent-3 text-white text-[30px] m-[2px] lg:font-black lg:indent-4 lg:max-w-[3.75ch] lg:max-h-[3.75ch] lg:p-[12px] lg:text-[36px] lg:m-[4px] bg-green-600 placeholder:text-white"
+                            : "max-w-[2.5ch] max-h-[2.5ch] indent-3 text-white text-[30px] m-[2px] lg:font-black lg:indent-4 lg:max-w-[3.75ch] lg:max-h-[3.75ch] lg:p-[12px] lg:text-[36px] lg:m-[4px] bg-yellow-600 placeholder:text-white"
+                          : "max-w-[2.5ch] max-h-[2.5ch] indent-3 text-white text-[30px] m-[2px] lg:font-black lg:indent-4 lg:max-w-[3.75ch] lg:max-h-[3.75ch] lg:p-[12px] lg:text-[36px] lg:m-[4px] bg-gray-600 placeholder:text-white"
                       }
                     />
                   </span>
@@ -147,7 +152,18 @@ function Game({ wordLength, numTries }: GameProps) {
             </div>
           ))}
         </div>
-        {gameEnded && <p>Correct word is: {word}</p>}
+        {gameEnded && (
+          <p className="text-[#111827] text-[30px]">Correct word is: {word}</p>
+        )}
+        {gameEnded && (
+          <img
+            className="m-[6px] p-[6px] hover:scale-110 transition-all ease-in-out hover:cursor-pointer"
+            src="/icons/refresh.svg"
+            width={100}
+            height={100}
+            onClick={handleClick}
+          />
+        )}
       </div>
     </>
   );
